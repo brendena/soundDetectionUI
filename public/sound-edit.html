@@ -1,0 +1,121 @@
+<link rel="import" href="bower_components/paper-card/paper-card.html">  
+<link rel="import" href="bower_components/paper-toggle-button/paper-toggle-button.html">  
+<link rel="import" href="./priority-selector.html">
+<link rel="import" href="./notification-times.html">
+<link rel="import" href="./notification-time-selector.html">
+<link rel="import" href="bower_components/paper-fab/paper-fab.html">
+
+
+<dom-module id="sound-edit">
+  <style>
+
+  </style>
+  <template>
+   
+   
+    <paper-card >
+      <div class="card-content">
+        <div >
+          <p>{{soundInfo.name}}</p>   
+        </div>
+        <div>
+            disable
+        </div>
+        <div>
+            <priority-selector certainty="{{soundInfo.certainty}}"></priority-selector>
+        </div>
+      </div>
+      <div>
+        <template is="dom-repeat" items="{{notificationDatesArray}}" as="day">
+            <p>[[day.day]] [[day.start]] [[day.end]]</p>
+            <notification-time-selector start="{{day.start}}" end="{{day.end}}"></notification-time-selector>
+        </template>
+      </div>
+      <paper-button on-tap="submit" raised> Submit </paper-button>
+      <paper-button on-tap="destroy" raised>delete</paper-button>
+      <paper-button on-tap="test" raised>test</paper-button>
+    </paper-card>
+    
+        
+        
+  </template>
+  <script>
+    Polymer({
+        is: 'sound-edit',
+        ready: function(){
+            
+        },
+        properties:{
+            soundInfo:{
+                type: Object,
+                reflectToAttribute: true,
+                observer: '_changedNotificationDates'
+            },
+            notificationDatesArray:{
+                type: Object
+            }
+            
+            
+        },
+        destroy: function(){
+            this.fire("deleteNotification");
+        },
+        test:function(){
+            console.log(this.soundInfo);
+        },
+        submit:function(){
+            console.log("fired subitNotficationChange");
+            
+            
+            var days = ["M","T","W","Th","F","S", "SU"];
+            var returnArray = {};
+            for(var i =0; i < days.length; i++){
+                if(this.notificationDatesArray[i].start != 0 && this.notificationDatesArray[i].end !=0){
+                    var asdf = days[i];
+                    returnArray[days[i]] = this.notificationDatesArray[i];
+                }
+            }
+
+            console.log(days);
+             this.soundInfo.notificationDates = returnArray;
+             
+            this.fire("submitNotificationChange",{"sound": this.soundInfo});
+        },
+        _changedNotificationDates:function(){
+            console.log("_changedNotificationDates");
+            console.log(this.soundInfo);
+            var days = ["M","T","W","Th","F","S", "SU"];
+            var changedInfo = [];
+            
+            for (i=0; i < days.length; i++) {
+                var value = this._checkDay(days[i]);
+                
+                if(value === 0){
+                    value = {
+                        "day": days[i],
+                        "start": 0,
+                        "end": 0
+                    }
+                }
+                changedInfo.push(value);
+            }
+            this.notificationDatesArray = changedInfo;
+            console.log(this.notificationDatesArray);
+        },
+        _checkDay: function(day){
+            //console.log(this.soundInfo);
+            for (var prop in this.soundInfo.notificationDates) {
+               
+                
+                if(day == this.soundInfo.notificationDates[prop].day){
+                    return this.soundInfo.notificationDates[prop];
+                }
+            }
+            
+            return 0;
+        }
+        
+        
+    });
+  </script>
+</dom-module>

@@ -1,0 +1,101 @@
+<link rel="import" href="./bower_components/iron-input/iron-input.html">
+<link rel="import" href="./bower_components/paper-checkbox/paper-checkbox.html">
+
+
+<dom-module id="notification-time-selector">
+  <style>
+      /*
+      https://codingwithgerwin.blogspot.com/2016/04/polymer-and-hidden-attribute.html
+      */
+      p[[hidden]]{
+          display: none;
+      }  
+  </style>
+  <template>
+    <!-- 
+    i want a checkbox
+    and two input tags
+    -->
+    <paper-checkbox checked='{{enableInput}}' on-change="changed">
+    
+    </paper-checkbox>
+    <input id="start" is="iron-input" type=time bind-value="{{start}}" prevent-invalid-input allowed-pattern="[0-9]"/>
+    to
+    <input id="end" is="iron-input" type=time bind-value="{{end}}" prevent-invalid-input allowed-pattern="[0-9]" />
+    <p hidden$="[[hideError]]">error</p>
+  </template>
+  <script>
+    Polymer({
+        is: 'notification-time-selector',
+        properties:{
+            start:{
+                type: String,
+                observer: "checkInput", 
+                notify: true
+            },
+            end:{
+                type: String,
+                observer: "checkInput",
+                notify: true
+            },
+            error:{
+                type: Boolean,
+                value: true
+            }
+        },
+        ready: function(){
+            
+            if(this.end == "0" && this.start == "0"){
+                console.log("got through ready");
+                this.enableInput = false;
+            }
+            else{
+                this.enableInput = true;
+            }
+            this.changed();
+        },
+        changed: function(){
+            //console.log("disabled = " + this.enableInput);
+            if(this.enableInput == false){
+                this.$.start.disabled  = true;
+                this.$.end.disabled  = true;
+            }
+            else{
+                this.$.start.disabled  = false;
+                this.$.end.disabled  = false;
+            }
+            
+        },
+        //this is really bad
+        checkInput: function(newValue, oldValue){
+            //console.log("checkInput!!!!!!!!!!!!!!!!!");
+
+            
+            if(24 < this.start){
+                this.start = 24;
+            }
+            if(24 < this.end){
+                this.end = 24;
+            }
+            //this is for if people delete the input
+            if(this.start == "" || this.end == ""){
+                console.log("dam")
+                this.hideError = true;
+            }
+            else{
+
+                if(this.start <= this.end){
+                    
+                    this.hideError = true;
+                }
+                else{
+                    this.hideError = false;
+                }
+                
+            }
+        }
+        
+        
+    });
+  </script>
+</dom-module>

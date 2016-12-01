@@ -1,0 +1,29 @@
+<link rel="import" href="./bower_components/paper-input/paper-input.html">  
+<link rel="import" href="./bower_components/paper-slider/paper-slider.html">  
+
+<dom-module id="priority-selector">
+
+  <template>
+    <paper-input label="Priority Level" value="{{certainty}}" type="number" min='0' max='100'>
+    </paper-input>
+    <paper-slider value="{{certainty}}" min='0' max='100' ></paper-slider>
+  </template>
+  <script>
+    Polymer({
+        is: 'priority-selector',
+        properties:{
+          certainty:{
+                type : Number,
+                reflectToAttribute: true,
+                notify: true
+            }
+        },
+        ready: function(){
+
+        }
+
+        
+        
+    });
+  </script>
+</dom-module>

@@ -1,0 +1,21 @@
+<link rel="import" href="./bower_components/app-storage/app-network-status-behavior.html">
+<script>
+  (function() {
+    'use strict';
+    Polymer.EditNotificationBehaviorImp = {
+      properties: {
+        editableNotification: {
+          type: Object,
+          notify: true
+        }
+      },
+    
+      
+    };
+    /** @polymerBehavior */
+    Polymer.EditNotificationBehavior = [
+      Polymer.AppNetworkStatusBehavior,
+      Polymer.EditNotificationBehaviorImp
+    ];
+  })();
+</script>

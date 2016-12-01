@@ -1,0 +1,56 @@
+<link rel="import" href="bower_components/paper-card/paper-card.html">  
+<link rel="import" href="bower_components/paper-toggle-button/paper-toggle-button.html">  
+<link rel="import" href="./priority-selector.html">
+<link rel="import" href="./notification-times.html">
+
+
+<dom-module id="sound-card">
+  <style>
+
+  </style>
+  <template>
+   
+   
+    <paper-card >
+      <div class="card-content">
+        <div >{{soundInfo.name}}
+            <paper-button raised class="indigo" on-tap="launchSoundEdit">edit</paper-button>
+        </div>
+        <div>
+            <priority-selector certainty="{{soundInfo.certainty}}"></priority-selector>
+        </div>
+      </div>
+      <div class="card-actions">
+          
+          <notification-times notification-dates="[[soundInfo.notificationDates]]"></notification-times>
+          
+      </div>
+      
+    </paper-card>
+    
+        
+        
+  </template>
+  <script>
+    Polymer({
+        is: 'sound-card',
+        ready: function(){
+
+        },
+        properties:{
+            soundInfo:{
+                type: Object,
+                reflectToAttribute: true
+            }
+            
+            
+        },
+        launchSoundEdit:function(){
+            console.log("clicked launched Sound edit");
+            this.fire('soundEdit', {sound: this.soundInfo});
+        }
+        
+        
+    });
+  </script>
+</dom-module>

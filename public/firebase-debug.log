@@ -1,0 +1,10 @@
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/bin/nodejs /usr/bin/firebase deploy
+[debug] CLI Version:  3.2.0
+[debug] Platform:     linux
+[debug] Node Version: v4.6.1
+[debug] Time:         Thu Dec 01 2016 07:52:01 GMT-0500 (EST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase"]
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/testapp-358e3 
